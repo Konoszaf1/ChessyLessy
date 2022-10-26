@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="23017e26-0af3-4c9d-8f59-b74d448d412f" name="Changes" comment="Initial Commit, Add Basic Window and elementary buttons, Create some basic classes following MVC pattern">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_intellij_annotations_7_0_3.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_intellij_extensions_7_0_3.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_intellij_openapi_7_0_3.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Chess.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Main.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/controller/ButtonPieceHashMap.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/controller/GameController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/model/board/Board.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/model/board/BoardColumn.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/model/piece/Bishop.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/model/piece/King.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/model/piece/Knight.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/model/piece/Pawn.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/model/piece/Piece.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/model/piece/PieceColor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/model/piece/PieceType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/model/piece/Queen.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/model/piece/Rook.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/view/MainWindow.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/view/button/Button.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/view/button/ButtonStatus.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/bishop_black.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/bishop_white.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/king_black.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/king_white.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/knight_black.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/knight_white.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/pawn_black.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/pawn_white.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/queen_black.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/queen_white.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/rook_black.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/rook_white.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/bishop_black.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/bishop_white.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/king_black.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/king_white.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/knight_black.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/knight_white.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/pawn_black.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/pawn_white.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/queen_black.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/queen_white.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/rook_black.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/rook_white.png" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Enum" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="jar://$PROJECT_DIR$/../../../../Program Files/Java/jdk-15.0.2/lib/src.zip!/java.desktop/java/awt/GridBagConstraints.java" root0="SKIP_INSPECTION" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectId" id="2GNDof7pIPjpuXadU4it2xRi96r" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.grazie&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\ΖΑΦΕΙΡΗΣ ΚΩΝ\IdeaProjects\Chess\src\main\resources" />
+      <recent name="C:\Users\ΖΑΦΕΙΡΗΣ ΚΩΝ\IdeaProjects\Chess\src" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="model.board" />
+      <recent name="model" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Main" />
+      <module name="Chess" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Main" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="23017e26-0af3-4c9d-8f59-b74d448d412f" name="Changes" comment="" />
+      <created>1666220328057</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1666220328057</updated>
+      <workItem from="1666220335792" duration="387000" />
+      <workItem from="1666293448091" duration="11881000" />
+      <workItem from="1666548290069" duration="20479000" />
+      <workItem from="1666618803758" duration="12499000" />
+      <workItem from="1666639319901" duration="9536000" />
+      <workItem from="1666653731642" duration="944000" />
+      <workItem from="1666805783286" duration="8515000" />
+      <workItem from="1666821647923" duration="147000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Initial Commit, Add Basic Window and elementary buttons, Create some basic classes following MVC pattern" />
+    <option name="LAST_COMMIT_MESSAGE" value="Initial Commit, Add Basic Window and elementary buttons, Create some basic classes following MVC pattern" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/view/MainWindow.java</url>
+          <line>92</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>
