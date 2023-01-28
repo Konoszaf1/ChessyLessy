@@ -1,6 +1,7 @@
 package model.piece;
 
-import view.button.Button;
+import model.board.BoardColumn;
+import view.button.ChessBoardButton;
 
 import javax.imageio.ImageIO;
 import java.io.IOException;
@@ -12,14 +13,21 @@ abstract public class Piece {
 
    private PieceColor color;
    private PieceType type;
-   public Button curAssignedButton;
+   public ChessBoardButton curAssignedButton;
+   private Integer row = null;
+   private BoardColumn col = null;
 
    public Piece(PieceColor color, PieceType type){
       this.color = color;
       this.type = type;
    }
+   public Piece(PieceColor color, PieceType type, BoardColumn col){
+      this.color = color;
+      this.type = type;
+      this.col = col;
+   }
    abstract protected void move();
-   abstract protected void getAvailableMoves(); // TODO: Refactor
+   abstract protected void getAvailableMoves(); // TODO: Implement
    public Image getImage(){
       return this.img;
    }
@@ -38,4 +46,19 @@ abstract public class Piece {
    public PieceColor getColor() {
       return color;
    }
+   public Integer getRow() {
+      return row;
+   }
+   public BoardColumn getCol() {
+      return col;
+   }
+   public void setRow(int row) {
+      this.row = row;
+   }
+
+   public void setCol(BoardColumn col) {
+      this.col = col;
+   }
+
+
 }

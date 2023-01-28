@@ -1,11 +1,13 @@
 package controller;
 
 import model.board.Board;
+import model.piece.PieceColor;
 import view.MainWindow;
 
 public class GameController {
 
     private MainWindow mainWindow;
+    private PieceColor playerColor;
     private Board board;
     private static final GameController INSTANCE = new GameController();
     private ButtonPieceHashMap buttonPiecesMap;
@@ -20,10 +22,17 @@ public class GameController {
     }
 
     private void initialize(){
-        this.board = new Board();
+        new DialogController(this);
+
+        this.board = new Board(this.playerColor);
         this.buttonPiecesMap = new ButtonPieceHashMap();
         this.mainWindow = MainWindow.getInstance();
+
         this.mainWindow.setButtonImages(this.board, this.buttonPiecesMap);
+
+    }
+    public void setPlayerColor(PieceColor playerColor) {
+        this.playerColor = playerColor;
     }
 
     public void startGame(){

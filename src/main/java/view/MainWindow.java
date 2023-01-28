@@ -5,8 +5,9 @@ import model.board.BoardColumn;
 import model.board.Board;
 
 import model.piece.Piece;
+import model.piece.PieceColor;
 import model.piece.PieceType;
-import view.button.Button;
+import view.button.ChessBoardButton;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,10 +20,11 @@ public class MainWindow extends JFrame {
      */
     private static final MainWindow INSTANCE = new MainWindow();
     private final GridBagLayout gridBagLayout = new GridBagLayout();
-    private final ArrayList<ArrayList<Button>> buttons = new ArrayList<>();
+    private final ArrayList<ArrayList<ChessBoardButton>> buttons = new ArrayList<>();
     private MainWindow(){
         super();
         this.initialize();
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
     public static MainWindow getInstance(){
@@ -32,6 +34,7 @@ public class MainWindow extends JFrame {
     private void initialize(){
         this.setLayout(gridBagLayout);
         this.setSize(800,800);
+        this.setResizable(true);
         this.setVisible(true);
         this.setupButtons();
 
@@ -40,12 +43,12 @@ public class MainWindow extends JFrame {
         for (int i=0; i<8; i++){
             buttons.add(new ArrayList<>());
             for (BoardColumn col: BoardColumn.values()){
-                Button newButton;
+                ChessBoardButton newButton;
                 if ((col.ordinal() + i) % 2 == 0){
-                    newButton = new Button(Button.LIGHT, i ,col);
+                    newButton = new ChessBoardButton(ChessBoardButton.LIGHT, i ,col);
                 }
                 else{
-                    newButton = new Button(Button.DARK, i ,col);
+                    newButton = new ChessBoardButton(ChessBoardButton.DARK, i ,col);
                 }
                 buttons.get(i).add(newButton);
                 gridBagLayout.setConstraints(newButton, newButton.getGbc());
@@ -53,17 +56,17 @@ public class MainWindow extends JFrame {
             }
         }
     }
-    private void setButtonImage(Button button, Image image){
+    private void setButtonImage(ChessBoardButton button, Image image){
         button.setIcon(new ImageIcon(image.getScaledInstance(75, 75, Image.SCALE_SMOOTH)));
     }
 
-    private ArrayList<Button> getRowButtons(int rowIndex){
+    private ArrayList<ChessBoardButton> getRowButtons(int rowIndex){
         return buttons.get(rowIndex);
     }
-    private ArrayList<Button> getColumnButtons(BoardColumn col){
-        ArrayList<Button> tempList = new ArrayList<>();
-        for (ArrayList<Button> row: buttons){
-            for (Button button: row){
+    private ArrayList<ChessBoardButton> getColumnButtons(BoardColumn col){
+        ArrayList<ChessBoardButton> tempList = new ArrayList<>();
+        for (ArrayList<ChessBoardButton> row: buttons){
+            for (ChessBoardButton button: row){
                 if (button.getColumn() == col ){
                     tempList.add(button);
                 }
@@ -73,24 +76,24 @@ public class MainWindow extends JFrame {
     }
 
     public void setButtonImages(Board board, ButtonPieceHashMap buttonPieceMap){
-//        for (Button button: getRowButtons(0)){
-//            switch (button.getColumn()){
-//                case A -> {
-//                    setButtonImage(button,piece);
-//                }
-//                case H -> {
-//                    setButtonImage(button,piece.getImage());}
-//            }
-//        }
-        for (Button button : getRowButtons(1)){
-            for (Piece piece : board.getPieces(null,new ArrayList<PieceType>(Arrays.asList(PieceType.KING,PieceType.QUEEN)))){
+        for (int row =0; row<8; row++){
+            for (ChessBoardButton button : this.getRowButtons(row))
+                for (Piece piece : board.getAllPieces()) {
+                    if (button.getRow() == piece.getRow() && button.getColumn() == piece.getCol()) {
+                        setButtonImage(button, piece.getImage());
+                        buttonPieceMap.setButtonPiecePair(button, piece);
+                    }
+                }
+        }
+        /*for (ChessBoardButton button : getRowButtons(1)){
+            for (Piece piece : board.getPieces(PieceColor.BLACK,new ArrayList<PieceType>(Arrays.asList(PieceType.KING,PieceType.QUEEN)))){
                 setButtonImage(button, piece.getImage());
                 buttonPieceMap.setButtonPiecePair(button,piece);
             }
-        }
-        for (Piece piece: board.getAllPieces()){
-            for (ArrayList<Button> row: buttons){
-                for (Button button: row){
+        }*/
+        /*for (Piece piece: board.getAllPieces()){
+            for (ArrayList<ChessBoardButton> row: buttons){
+                for (ChessBoardButton button: row){
                     if (button.getRow() == 6 && piece.getType() == PieceType.PAWN) {
                         button.setIcon(new ImageIcon(piece.getImage().getScaledInstance(75, 75, Image.SCALE_SMOOTH)));
                     }
@@ -114,6 +117,6 @@ public class MainWindow extends JFrame {
                     }
                 }
             }
-        }
+        }*/
     }
 }
