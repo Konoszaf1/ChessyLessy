@@ -1,7 +1,12 @@
-### IntelliJ IDEA ###
+### Build output ###
+target/
 out/
 !**/src/main/**/out/
 !**/src/test/**/out/
+
+### IntelliJ IDEA ###
+.idea/
+*.iml
 
 ### Eclipse ###
 .apt_generated
@@ -27,5 +32,7 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+
+### Misc ###
 /src/resources/chess-g9efa12255_1280.png
 /src/img.png

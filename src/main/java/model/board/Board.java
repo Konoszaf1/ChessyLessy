@@ -5,20 +5,20 @@ import utils.CharUtilFuncs;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class Board {
 
-    private final ArrayList<Piece> whitePieces = new ArrayList<>();
-    private final ArrayList<Piece> blackPieces = new ArrayList<>();
+    private final Piece[][] grid = new Piece[8][8];
+    private final List<Piece> whitePieces = new ArrayList<>();
+    private final List<Piece> blackPieces = new ArrayList<>();
 
     public Board(PieceColor playerColor) {
         this.createPieces();
         this.placePiecesStartingPosition(playerColor);
-
     }
 
     private void createPieces() {
-        // Create all pieces instances on the board.
         for (int i = 0; i < 8; i++) {
             whitePieces.add(new Pawn(PieceColor.WHITE));
             blackPieces.add(new Pawn(PieceColor.BLACK));
@@ -37,89 +37,132 @@ public class Board {
         blackPieces.add(new King(PieceColor.BLACK));
     }
 
-    public ArrayList<Piece> getAllPieces() {
-        // Return a list of all pieces on the board
-        ArrayList<Piece> allPiecesList = new ArrayList<>(this.getBlackPieces());
-        allPiecesList.addAll(this.getWhitePieces());
-        return allPiecesList;
+    public List<Piece> getAllPieces() {
+        List<Piece> all = new ArrayList<>(whitePieces);
+        all.addAll(blackPieces);
+        return all;
     }
 
-    public ArrayList<Piece> getWhitePieces() {
-        return this.whitePieces;
+    public List<Piece> getActivePieces(PieceColor color) {
+        List<Piece> source = (color == PieceColor.WHITE) ? whitePieces : blackPieces;
+        List<Piece> active = new ArrayList<>();
+        for (Piece p : source) {
+            if (p.isPlaced()) {
+                active.add(p);
+            }
+        }
+        return active;
     }
 
-    public ArrayList<Piece> getBlackPieces() {
-        return this.blackPieces;
+    public Piece getPieceAt(int row, int col) {
+        if (row < 0 || row >= 8 || col < 0 || col >= 8) return null;
+        return grid[row][col];
     }
 
-    public void placePiecesStartingPosition(PieceColor playercolor) {
-        FEN startingFEN = playercolor == PieceColor.WHITE ? FEN.START_POS_WHITE : FEN.START_POS_BLACK;
+    public Piece getPieceAt(Position pos) {
+        if (pos == null) return null;
+        return getPieceAt(pos.getRow(), pos.getColIndex());
+    }
+
+    public boolean isEmpty(int row, int col) {
+        return getPieceAt(row, col) == null;
+    }
+
+    public boolean isEmpty(Position pos) {
+        return getPieceAt(pos) == null;
+    }
+
+    public void movePiece(Position from, Position to) {
+        Piece piece = getPieceAt(from);
+        if (piece == null) {
+            throw new IllegalArgumentException("No piece at " + from);
+        }
+
+        // Remove captured piece if any
+        Piece captured = getPieceAt(to);
+        if (captured != null) {
+            removePiece(captured);
+        }
+
+        // Update grid
+        grid[from.getRow()][from.getColIndex()] = null;
+        grid[to.getRow()][to.getColIndex()] = piece;
+        piece.setPosition(to.getRow(), to.getCol());
+    }
+
+    public void removePiece(Piece piece) {
+        if (piece.getRow() != null && piece.getCol() != null) {
+            grid[piece.getRow()][piece.getCol().ordinal()] = null;
+        }
+        piece.setPosition(-1, null); // Mark as captured/off-board
+        whitePieces.remove(piece);
+        blackPieces.remove(piece);
+    }
+
+    public King findKing(PieceColor color) {
+        List<Piece> pieces = (color == PieceColor.WHITE) ? whitePieces : blackPieces;
+        for (Piece p : pieces) {
+            if (p.getType() == PieceType.KING && p.isPlaced()) {
+                return (King) p;
+            }
+        }
+        return null;
+    }
+
+    // --- FEN parsing (preserved from original) ---
+
+    public void placePiecesStartingPosition(PieceColor playerColor) {
+        FEN startingFEN = playerColor == PieceColor.WHITE ? FEN.START_POS_WHITE : FEN.START_POS_BLACK;
         this.parseFEN(startingFEN);
     }
 
     private void parseFEN(FEN fen) {
         int currentRow = -1;
-        ArrayList<String> rows = new ArrayList<>(Arrays.asList(fen.getString().split("/")));
-        for (String piece : rows) { //rnbqkbnr or 4P3 or 8
+        List<String> rows = Arrays.asList(fen.getString().split("/"));
+        for (String rowStr : rows) {
             BoardColumn currentColumn = BoardColumn.A;
             currentRow += 1;
-            for (char character : piece.toCharArray()) {
+            for (char character : rowStr.toCharArray()) {
                 if (CharUtilFuncs.isNumeric(character)) {
                     currentColumn = currentColumn.incrementColumnByInt(character);
                 } else if (CharUtilFuncs.isCapitalAlpha(character)) {
-                    ArrayList<Piece> pieces = this.getPieces(PieceColor.WHITE, PieceType.getType(character));
-                    for (Piece availablePiece : pieces) {
-                        if (availablePiece.getRow() == null && availablePiece.getCol() == null) {
-                            availablePiece.setCol(currentColumn);
-                            availablePiece.setRow(currentRow);
-                            currentColumn = currentColumn.getNextColumn();
-                            break;
-                        }
-                    }
+                    placePieceFromFEN(PieceColor.WHITE, character, currentRow, currentColumn);
+                    currentColumn = currentColumn.getNextColumn();
                 } else if (CharUtilFuncs.isNonCapitalAlpha(character)) {
-                    ArrayList<Piece> pieces = this.getPieces(PieceColor.BLACK, PieceType.getType(character));
-                    for (Piece availablePiece : pieces) {
-                        if (availablePiece.getRow() == null && availablePiece.getCol() == null) {
-                            availablePiece.setCol(currentColumn);
-                            availablePiece.setRow(currentRow);
-                            currentColumn = currentColumn.getNextColumn();
-                            break;
-                        }
-                    }
+                    placePieceFromFEN(PieceColor.BLACK, character, currentRow, currentColumn);
+                    currentColumn = currentColumn.getNextColumn();
                 }
             }
         }
     }
 
-    // TODO: Enable one time fetching for assigning to buttons.
-    public ArrayList<Piece> getPieces(PieceColor color, PieceType type) {
-        ArrayList<Piece> tempList = this.getAllPieces();
-        if (color == null && type == null) {
-            throw new NullPointerException("Arguments can't be both null.");
+    private void placePieceFromFEN(PieceColor color, char character, int row, BoardColumn col) {
+        PieceType type = PieceType.getType(character);
+        if (type == null) return;
+
+        List<Piece> pieces = (color == PieceColor.WHITE) ? whitePieces : blackPieces;
+        for (Piece piece : pieces) {
+            if (piece.getType() == type && !piece.isPlaced()) {
+                piece.setPosition(row, col);
+                grid[row][col.ordinal()] = piece;
+                return;
+            }
         }
-        if (color == null) {
-            tempList.removeIf((piece) -> (piece.getType() != type));
-        } else if (type == null) {
-            tempList.removeIf((piece) -> (piece.getColor() != color));
-        } else {
-            tempList.removeIf((piece) -> (piece.getColor() != color || piece.getType() != type));
-        }
-        return tempList;
     }
 
-    public ArrayList<Piece> getPieces(PieceColor color, ArrayList<PieceType> typesList) {
-        ArrayList<Piece> tempList = this.getAllPieces();
-        if (color == null && (typesList == null || typesList.equals(new ArrayList<PieceType>()))) {
-            throw new NullPointerException("Arguments can't be both null.");
+    public List<Piece> getPieces(PieceColor color, PieceType type) {
+        List<Piece> result = new ArrayList<>();
+        for (Piece p : getAllPieces()) {
+            boolean colorMatch = (color == null || p.getColor() == color);
+            boolean typeMatch = (type == null || p.getType() == type);
+            if (colorMatch && typeMatch) {
+                result.add(p);
+            }
         }
-        if (color == null) {
-            tempList.removeIf((piece) -> (!typesList.contains(piece.getType())));
-        } else if (typesList == null || typesList.equals(new ArrayList<PieceType>())) {
-            tempList.removeIf((piece) -> (piece.getColor() != color));
-        } else {
-            tempList.removeIf((piece) -> (piece.getColor() != color
-                    || !typesList.contains(piece.getType())));
-        }
-        return tempList;
+        return result;
+    }
+
+    public Piece[][] getGrid() {
+        return grid;
     }
 }
